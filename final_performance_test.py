@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Minimal NavSim GPU batched processing performance test."""
+"""NavSim GPU batched processing performance test."""
 
 import time
 import torch
@@ -13,7 +13,7 @@ from nuplan.planning.simulation.trajectory.trajectory_sampling import Trajectory
 
 
 def create_test_data(num_scenes: int) -> List[AgentInput]:
-    """Create minimal test data."""
+    """Create test data."""
     agent_inputs = []
     for i in range(num_scenes):
         ego_statuses = [EgoStatus(
