@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 
 import pytorch_lightning as pl
 import torch
@@ -82,6 +82,11 @@ class AbstractAgent(torch.nn.Module, ABC):
 
         # extract trajectory
         return Trajectory(poses, self._trajectory_sampling)
+
+    def compute_trajectories_batched(self, agent_inputs: List[AgentInput], batch_size: int = 8, device: Optional[torch.device] = None) -> List[Trajectory]:
+        """Compute trajectories using GPU batching for improved throughput."""
+        from navsim.common.batched_runner import BatchProcessor
+        return BatchProcessor(self, device, batch_size).run_batched(agent_inputs)
 
     def compute_loss(
         self,
